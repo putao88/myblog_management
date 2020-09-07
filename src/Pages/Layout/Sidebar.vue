@@ -9,7 +9,7 @@
     active-text-color="#ffd04b"
   >
     <template v-for="item in routes">
-        <router-link v-if="!item.hidden&&item.children.length>0" :to="item.path+'/'+item.children[0].path">
+        <router-link :key='item.path' v-if="!item.hidden&&item.children.length>0" :to="item.path+'/'+item.children[0].path">
             <el-menu-item  :index="item.path+'/'+item.children[0].path">
                 <i :class="item.icon"></i>
                 <span slot="title">{{item.name}}</span>

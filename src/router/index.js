@@ -24,10 +24,10 @@ export const constantRouterMap = [
     {
         path: '/',
         component: Layout,
-        redirect: 'dashboard/index',
+        redirect: 'dashboard',
         icon:'el-icon-s-data',
         hidden: true,
-        children: [{ path: 'index', component: Dashboard }]
+        children: [{ path: 'dashboard', component: Dashboard }]
     },
     {
         path: '/dashboard',
