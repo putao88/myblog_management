@@ -46,34 +46,34 @@ const user = {
   actions: {
     // 用户名登录
     LoginByUsername({ commit }, userInfo) {
-      const username = userInfo.username.trim()
-      return new Promise((resolve, reject) => {
-        api.login(username, userInfo.password).then(response => {
-          const data = response.data
-          setToken(response.data.token)
-          commit('SET_TOKEN', data.token)
-          resolve()
-        }).catch(error => {
-          reject(error)
+        return new Promise((resolve, reject) => {
+          api.login({ info: JSON.stringify(userInfo) } , res => {
+              console.log(3)
+            const data = res.data
+            setToken(res.data.token)
+            commit('SET_TOKEN', data.token)
+            resolve()
+          }).catch(error => {
+            reject(error)
+          })
         })
-      })
-    },
-
-    // 获取用户信息
-    GetUserInfo({ commit, state }) {
-      return new Promise((resolve, reject) => {
-        api.getUserInfo(state.token).then(response => {
-          const data = response.data
-          commit('SET_ROLES', data.role)
-          commit('SET_NAME', data.name)
-          commit('SET_AVATAR', data.avatar)
-          commit('SET_INTRODUCTION', data.introduction)
-          resolve(response)
-        }).catch(error => {
-          reject(error)
+      },
+  
+      // 获取用户信息
+      GetUserInfo({ commit, state }) {
+        return new Promise((resolve, reject) => {
+          api.getUserInfo({token:state.token}, res => {
+            const data = res.data
+            commit('SET_ROLES', data.role)
+            commit('SET_NAME', data.name)
+            commit('SET_AVATAR', data.avatar)
+            resolve(res)
+          }).catch(error => {
+            reject(error)
+          })
         })
-      })
-    },
+      },
+  
 
     // 第三方验证登录
     // LoginByThirdparty({ commit, state }, code) {

@@ -2,7 +2,7 @@
  * @Author: houxiaoling 
  * @Date: 2020-09-04 17:59:57 
  * @Last Modified by: houxiaoling
- * @Last Modified time: 2020-09-07 17:44:00
+ * @Last Modified time: 2020-09-08 18:02:03
  */
 import exp from './exp'
 let { AxiosGet, AxiosPost } = exp
@@ -24,7 +24,7 @@ let api = {
 		})
     },
     getUserInfo: ( data,callback ) => {
-        let uri = url + '/user/getUserInfo'
+        let uri = url + '/users/getUserInfo'
 		AxiosPost({
 			url: uri,
 			data: data,
