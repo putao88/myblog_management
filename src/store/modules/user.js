@@ -47,10 +47,18 @@ const user = {
     // 用户名登录
     LoginByUsername({ commit }, userInfo) {
         return new Promise((resolve, reject) => {
-          api.login({ info: JSON.stringify(userInfo) } , res => {
-              console.log(3)
-            const data = res.data
-            setToken(res.data.token)
+        //   api.login({ info: JSON.stringify(userInfo) } , res => {
+        //       console.log(3)
+        //     const data = res.data
+        //     setToken(res.data.token)
+        //     commit('SET_TOKEN', data.token)
+        //     resolve()
+        //   }).catch(error => {
+        //     reject(error)
+        //   })
+        api.login({ info: JSON.stringify(userInfo) }).then(response => {
+            const data = response.data
+            setToken(response.data.token)
             commit('SET_TOKEN', data.token)
             resolve()
           }).catch(error => {
