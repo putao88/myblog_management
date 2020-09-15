@@ -8,6 +8,7 @@ import Layout from '@/Pages/Layout/index'
 import Dashboard from '@/Pages/Dashboard/index'
 import Article from '@/Pages/Article/index'
 import Leacots from '@/Pages/Leacots/index'
+import Permission from '@/Pages/Permission/index'
 
 
 
@@ -24,36 +25,45 @@ export const constantRouterMap = [
     {
         path: '/',
         component: Layout,
-        redirect: 'dashboard',
-        icon:'el-icon-s-data',
-        hidden: true,
-        children: [{ path: 'dashboard', component: Dashboard }]
-    },
-    {
-        path: '/dashboard',
-        component: Layout,
+        redirect: '/dashboard',
         name: '首页',
-        icon:'el-icon-s-data',
-        children: [{ path: 'index', component: Dashboard }]
-      },
-      {
-        path: '/article',
-        component: Layout,
-        name: '文章管理',
-        icon:'el-icon-document',
-        children: [{ path: 'index', component: Article }]
-      },
-      {
-        path: '/leacots',
-        component: Layout,
-        name: '留言管理',
-        icon:'el-icon-chat-dot-round',
-        children: [{ path: 'index', component: Leacots }]
-      },
+        icon: 'dashboard',
+        hidden: true,
+        children: [{ path: 'dashboard', component: Dashboard, name: '首页'  }]
+    },
 ]
 export default new Router({
     scrollBehavior: () => ({ y: 0 }),
     routes: constantRouterMap
 })
 
-export const asyncRouterMap = []
+export const asyncRouterMap = [
+    {
+        path: '/permission',
+        component: Layout,
+        redirect: '/permission/index',
+        name: '权限测试',
+        icon: 'lock',
+        meta: { role: ['admin'] },
+        noDropdown: true,
+        children: [{ path: 'index', component: Permission, name: '权限测试页', meta: { role: ['admin'] }}]
+      },
+    {
+        path: '/article',
+        component: Layout,
+        redirect: '/article/index',
+        name: '文章管理',
+        icon:'el-icon-document',
+        noDropdown: true,
+        children: [{ path: 'index', component: Article, name: '文章管理' }]
+      },
+      {
+        path: '/leacots',
+        component: Layout,
+        redirect: '/leacots/index',
+        name: '留言管理',
+        icon:'el-icon-chat-dot-round',
+        noDropdown: true,
+        children: [{ path: 'index', component: Leacots, name: '留言管理',  }]
+      },
+]
