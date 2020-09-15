@@ -2,35 +2,38 @@
  * @Author: houxiaoling 
  * @Date: 2020-09-04 17:59:57 
  * @Last Modified by: houxiaoling
- * @Last Modified time: 2020-09-14 18:03:02
+ * @Last Modified time: 2020-09-15 16:22:21
  */
-import exp from './exp'
-let { AxiosGet, AxiosPost } = exp
 import fetch from '@/utils/fetch'
 
 
-let url = 'http://127.0.0.1:3001'
 
 let api = {
     getUrl: () => {
         return url;
     },
     login: ( data ) => {
-        let uri = url + '/login/adminLogin'
+        let url = '/login/adminLogin'
         return fetch({
-            url: uri,
+            url: url,
             method: 'post',
             data
         })
     },
-    getUserInfo: ( data,callback ) => {
-        let uri = url + '/users/getUserInfo'
-		AxiosPost({
-			url: uri,
-			data: data,
-			reback: (res) => {
-				callback(res)
-			}
+    logout: ( data ) => {
+        let url = '/login/logout'
+        return fetch({
+            url: url,
+            method: 'post',
+            data
+        })
+    },
+    getUserInfo: ( data ) => {
+        let url = '/users/getUserInfo'
+		return fetch({
+            url: url,
+            method: 'post',
+            data
 		})
     },
 }

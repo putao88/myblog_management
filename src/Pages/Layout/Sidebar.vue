@@ -26,7 +26,6 @@ export default {
   name: "Sidebar",
   data() {
     return {
-      isCollapse: true,
       routes:constantRouterMap
     };
   },
