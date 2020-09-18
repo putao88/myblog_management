@@ -115,3 +115,29 @@ export function param2Obj(url) {
   })
   return obj
 }
+
+/**
+ * @param {Object} url
+ * @returns {Object}
+ * 整合数据成树形结构需要的
+ */
+export const fixIntoTree = (data, father_id, label, value, children) => {
+    let _this = this;
+    var tree = [];
+    var temp;
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].father_id == father_id) {
+            var obj = {
+                [value]:data[i].id,
+                [label]:data[i].name,
+            };
+            console.log(obj)
+            temp = fixIntoTree(data, data[i].id, label, value, children);
+            if (temp.length > 0) {
+                obj[children] = temp;
+            }
+            tree.push(obj);
+        }
+    }
+    return data
+  }

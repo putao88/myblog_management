@@ -71,7 +71,7 @@ export const constantRoutes = [
       {
         path: 'tree',
         name: 'Tree',
-        component: () => import('@/views/tree/index'),
+        component: () => import('@/views/classify/index'),
         meta: { title: '分类创建', icon: 'tree' }
       }
     ]
