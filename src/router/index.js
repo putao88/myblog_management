@@ -66,7 +66,13 @@ export const constantRoutes = [
         path: 'add',
         name: 'add',
         component: () => import('@/views/article/index'),
-        meta: { title: '新建文章', icon: 'el-icon-plus' }
+        meta: { title: '文章发布', icon: 'el-icon-plus' }
+      },
+      {
+        path: 'update',
+        name: 'update',
+        component: () => import('@/views/updateArticle/index'),
+        meta: { title: '文章修改', icon: 'el-icon-edit' }
       },
       {
         path: 'tree',

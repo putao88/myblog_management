@@ -2,7 +2,7 @@
  * @Author: houxiaoling 
  * @Date: 2020-09-04 17:59:57 
  * @Last Modified by: houxiaoling
- * @Last Modified time: 2020-09-18 16:33:54
+ * @Last Modified time: 2020-09-22 18:00:26
  */
 import request from '@/utils/request'
 
@@ -44,6 +44,37 @@ let api = {
             data
 		})
     },
+    updateArticle: ( data ) => {
+        let url = '/articles/updateArtcle'
+		return request({
+            url: url,
+            method: 'post',
+            data
+		})
+    },
+    deleteArtcle: ( data ) => {
+        let url = '/articles/deleteArtcle'
+		return request({
+            url: url,
+            method: 'post',
+            data
+		})
+    },
+    queryAllArticle: ( data ) => {
+        let url = '/articles/queryAll'
+		return request({
+            url: url,
+            method: 'get',
+		})
+    },
+    getArticleById: ( data ) => {
+        let url = '/articles/getArticleById'
+		return request({
+            url: url,
+            method: 'post',
+            data
+		})
+    },
     queryArticleClassify: ( data ) => {
         let url = '/articles/queryArticleClassify'
 		return request({
@@ -53,6 +84,14 @@ let api = {
     },
     addArtcleClassify: ( data ) => {
         let url = '/articles/addArtcleClassify'
+		return request({
+            url: url,
+            method: 'post',
+            data
+		})
+    },
+    updateArtcleClassify: ( data ) => {
+        let url = '/articles/updateArtcleClassify'
 		return request({
             url: url,
             method: 'post',

@@ -24,6 +24,7 @@
 <script>
 let id = 1000;
 import { api } from "@/utils/api";
+import { fixIntoTree } from "@/utils/index";
 export default {
   data() {
     return {
@@ -41,82 +42,120 @@ export default {
       this.loading = true;
       api.queryArticleClassify().then((res) => {
         this.loading = false;
-        this.data = this.fixIntoTree(res.data,0);
+        this.data = fixIntoTree(res.data, 0, "label", "id", "children", true);
       });
     },
-    //整合数据成树形结构需要的
-    fixIntoTree(data,father_id) {
-        let _this = this;
-        var tree = [];
-        var temp;
-        for (var i = 0; i < data.length; i++) {
-            if (data[i].father_id == father_id) {
-                var obj = {
-                    id:data[i].id,
-                    label:data[i].name,
-                };
-                temp = _this.fixIntoTree(data, data[i].id);
-                if (temp.length > 0) {
-                    obj.children = temp;
-                }
-                tree.push(obj);
-            }
-        }
-        return tree;
-    },
-
     //创建子分类
     append(data) {
-        this.$prompt('请输入分类名称', '新建', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          inputPattern: /\S+/,
-          inputErrorMessage: '请输入分类名称后再提交'
-        }).then(({ value }) => {
-            this.onSubmit(data.id,value)
+      this.$prompt("请输入分类名称", "新建", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        inputPattern: /\S+/,
+        inputErrorMessage: "请输入分类名称后再提交",
+      }).then(({ value }) => {
+        this.onSubmit(data.id, value);
+      });
+    },
+
+    // 修改子类
+    update(data) {
+      this.$prompt("请输入分类名称", "修改分类名称", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        inputPattern: /\S+/,
+        inputErrorMessage: "请输入分类名称后再提交",
+      }).then(({ value }) => {
+        const param = {
+            id: data.id,
+            name: value,
+        };
+        this.loading = true;
+        api.updateArtcleClassify({ info: JSON.stringify(param) }).then((res) => {
+            this.$message({ message: "修改成功!", type: "success" });
+            this.levelName = "";
+            this.loading = false;
+            this.fetchData();
         });
+      });
     },
 
     // 移除子分类
     remove(node, data) {
-        this.loading = true;
-      api.deleteArtcleClassify({ info: JSON.stringify({id:data.id}) }).then((res) => {
-        this.$message({message: '删除成功!',type: 'success'});
-        this.loading = false;
-        this.fetchData();
-      });
+      this.loading = true;
+      if (data.isArticle) {
+        api
+            .deleteArtcle({ info: JSON.stringify({ id: data.id }) })
+            .then((res) => {
+            this.$message({ message: "删除成功!", type: "success" });
+            this.loading = false;
+            this.fetchData();
+            });
+      } else {
+        api
+            .deleteArtcleClassify({ info: JSON.stringify({ id: data.id }) })
+            .then((res) => {
+            this.$message({ message: "删除成功!", type: "success" });
+            this.loading = false;
+            this.fetchData();
+            });
+      }
     },
 
     renderContent(h, { node, data, store }) {
-      return (
-        <span class="custom-tree-node">
-          <span>{node.label}</span>
-          <span>
-            <el-button
-              size="mini"
-              type="text"
-              on-click={() => this.append(data)}
-            >
-              添加
-            </el-button>
-            <el-button
-              size="mini"
-              type="text"
-              on-click={() => this.remove(node, data)}
-            >
-              删除
-            </el-button>
+      if (!data.isArticle) {
+        return (
+          <span class="custom-tree-node">
+            <span>{node.label}</span>
+            <span>
+              <el-button
+                size="mini"
+                type="text"
+                on-click={() => this.append(data)}
+              >
+                添加
+              </el-button>
+             <el-button
+                size="mini"
+                type="text"
+                on-click={() => this.update(data)}
+              >
+                修改
+              </el-button>
+              <el-button
+                size="mini"
+                type="text"
+                on-click={() => this.remove(node, data)}
+              >
+                删除
+              </el-button>
+            </span>
           </span>
-        </span>
-      );
+        );
+      } else {
+        return (
+          <span class="custom-tree-node">
+            <span>{node.label}</span>
+            <span>
+              <i class='el-icon-finished'></i>
+              <el-button
+                size="mini"
+                type="text"
+                on-click={() => this.remove(node, data)}
+              >
+                删除
+              </el-button>
+            </span>
+          </span>
+        );
+      }
     },
 
     //   提交创建
-    onSubmit(father_id,value) {
-    const name = value ? value : this.levelName
+    onSubmit(father_id, value) {
+      const name = value ? value : this.levelName;
       if (!name) {
         this.$message("请输入分类名称");
-        return
+        return;
       }
       const param = {
         father_id: father_id,
@@ -124,8 +163,8 @@ export default {
       };
       this.loading = true;
       api.addArtcleClassify({ info: JSON.stringify(param) }).then((res) => {
-        this.$message({message: '创建成功!',type: 'success'});
-        this.levelName = ''
+        this.$message({ message: "创建成功!", type: "success" });
+        this.levelName = "";
         this.loading = false;
         this.fetchData();
       });
@@ -155,6 +194,9 @@ export default {
   justify-content: space-between;
   font-size: 14px;
   padding-right: 8px;
+}
+.custom-tree-node .el-icon-finished {
+    padding-right:10px;
 }
 </style>
 
