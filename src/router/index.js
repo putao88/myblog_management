@@ -82,7 +82,27 @@ export const constantRoutes = [
       }
     ]
   },
-
+  {
+    path: '/whisper',
+    component: Layout,
+    redirect: '/whisper/add',
+    name: 'whisper',
+    meta: { title: '微语管理', icon: 'clipboard' },
+    children: [
+      {
+        path: 'add',
+        name: 'add',
+        component: () => import('@/views/whisper/index'),
+        meta: { title: '微语发布', icon: 'el-icon-plus' }
+	  },
+	  {
+        path: 'update',
+        name: 'update',
+        component: () => import('@/views/updateWhisper/index'),
+        meta: { title: '微语修改', icon: 'el-icon-edit' }
+      },
+    ]
+  },
   {
     path: '/form',
     component: Layout,

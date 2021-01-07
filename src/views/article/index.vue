@@ -42,16 +42,6 @@ export default {
   components: {
     mavonEditor,
   },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: "success",
-        draft: "gray",
-        deleted: "danger",
-      };
-      return statusMap[status];
-    },
-  },
   data() {
     return {
       list: null,
@@ -73,7 +63,7 @@ export default {
     // 搜索文章分类
     fetchData() {
       this.loading = true;
-      api.queryArticleClassify().then((res) => {
+      api.getAllWhisper().then((res) => {
         this.loading = false;
         this.articleType = fixIntoTree(res.data,0,'label','value','children',true);
       });

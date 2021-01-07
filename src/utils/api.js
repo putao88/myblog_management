@@ -2,7 +2,7 @@
  * @Author: houxiaoling 
  * @Date: 2020-09-04 17:59:57 
  * @Last Modified by: houxiaoling
- * @Last Modified time: 2020-09-22 18:00:26
+ * @Last Modified time: 2021-01-07 18:08:11
  */
 import request from '@/utils/request'
 
@@ -100,6 +100,37 @@ let api = {
     },
     deleteArtcleClassify: ( data ) => {
         let url = '/articles/deleteArtcleClassify'
+		return request({
+            url: url,
+            method: 'post',
+            data
+		})
+	},
+	getAllWhisper: ( data ) => {
+        let url = '/whispers/queryAll'
+		return request({
+            url: url,
+            method: 'get',
+		})
+	},
+	deleteWhisper: ( data ) => {
+        let url = '/whispers/deleteWhisper'
+		return request({
+            url: url,
+            method: 'post',
+            data
+		})
+	},
+	updateWhisper: ( data,callback ) => {
+        let url = '/whispers/updateWhisper'
+		return request({
+            url: url,
+            method: 'post',
+            data
+		})
+    },
+	addWhisper: ( data ) => {
+        let url = '/whispers/addWhisper'
 		return request({
             url: url,
             method: 'post',

@@ -86,17 +86,17 @@ export default {
         api
             .deleteArtcle({ info: JSON.stringify({ id: data.id }) })
             .then((res) => {
-            this.$message({ message: "删除成功!", type: "success" });
-            this.loading = false;
-            this.fetchData();
+                this.$message({ message: "删除成功!", type: "success" });
+                this.loading = false;
+                this.fetchData();
             });
       } else {
         api
             .deleteArtcleClassify({ info: JSON.stringify({ id: data.id }) })
             .then((res) => {
-            this.$message({ message: "删除成功!", type: "success" });
-            this.loading = false;
-            this.fetchData();
+                this.$message({ message: "删除成功!", type: "success" });
+                this.loading = false;
+                this.fetchData();
             });
       }
     },

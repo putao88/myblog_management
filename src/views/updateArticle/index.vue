@@ -39,6 +39,7 @@
       <el-col :span="4">
         <div class="pane-item">
           <el-button type="primary" @click="onSubmit">确定更新</el-button>
+          <el-button type="primary" @click="deleteArticle">删除</el-button>
         </div>
       </el-col>
 
@@ -57,21 +58,11 @@ export default {
   components: {
     mavonEditor,
   },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: "success",
-        draft: "gray",
-        deleted: "danger",
-      };
-      return statusMap[status];
-    },
-  },
   data() {
     return {
       list: null,
       listLoading: false,
-      editHeight: document.body.offsetHeight - 240,
+      editHeight: document.body.offsetHeight - 280,
       articleType:[],
       articleList:[],
       articleId:'',
@@ -118,9 +109,18 @@ export default {
         }
         this.article.type = getFathersById(father_id, this.articleType, 'value') 
     },
-    // 获取当前文章的分类路径
-    getFatherId(id) {
-
+    //删除当前文章
+    deleteArticle() {
+        if (!this.articleId) {
+             this.$message({ message: "请选择文章!", type: "error" });
+             return
+        }
+        api
+            .deleteArtcle({ info: JSON.stringify({ id: this.articleId }) })
+            .then((res) => {
+                this.$message({ message: "删除成功!", type: "success" });
+                this.reset()
+            });
     },
     onSubmit() {
         if (!this.article.title||!this.article.content||!this.article.type.length) {
@@ -136,16 +136,19 @@ export default {
         }
         api.updateArticle({info:JSON.stringify(param)}). then((res) => {
             this.$message({message: '更新成功!',type: 'success'});
-            this.article = {
-                title:'',
-                content:'',
-                type:[],
-                picture:'',
-            }
-            this.articleId = ''
-            this.queryAllArticle()
+            this.reset()
         })
     },
+    reset() {
+        this.article = {
+            title:'',
+            content:'',
+            type:[],
+            picture:'',
+        }
+        this.articleId = ''
+        this.queryAllArticle()
+    }
   },
 };
 </script>
