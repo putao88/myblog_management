@@ -63,7 +63,7 @@ export default {
     // 搜索文章分类
     fetchData() {
       this.loading = true;
-      api.getAllWhisper().then((res) => {
+      api.queryArticleClassify().then((res) => {
         this.loading = false;
         this.articleType = fixIntoTree(res.data,0,'label','value','children',true);
       });
