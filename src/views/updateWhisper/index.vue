@@ -44,7 +44,7 @@ export default {
     return {
       list: null,
       listLoading: false,
-      editHeight: document.body.offsetHeight - 280,
+      editHeight: document.body.offsetHeight - 180,
       whisperList:[],
       whisperId:'',
       whisper:{

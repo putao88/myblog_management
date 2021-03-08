@@ -22,7 +22,7 @@ export default {
   },
   data() {
     return {
-      editHeight: document.body.offsetHeight - 160,
+      editHeight: document.body.offsetHeight - 150,
       content:'',
     };
   },

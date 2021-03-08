@@ -2,7 +2,7 @@
  * @Author: houxiaoling 
  * @Date: 2020-09-04 17:59:57 
  * @Last Modified by: houxiaoling
- * @Last Modified time: 2021-01-07 18:08:11
+ * @Last Modified time: 2021-01-26 14:38:18
  */
 import request from '@/utils/request'
 
@@ -45,7 +45,7 @@ let api = {
 		})
     },
     updateArticle: ( data ) => {
-        let url = '/articles/updateArtcle'
+        let url = '/articles/updateArticleBackend'
 		return request({
             url: url,
             method: 'post',
