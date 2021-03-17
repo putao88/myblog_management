@@ -115,6 +115,18 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/umy-table',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'umy-table',
+        component: () => import('@/views/umy-table/index'),
+        meta: { title: 'umy-table', icon: 'form' }
+      }
+    ]
+  },
 
 //   {
 //     path: '/nested',
